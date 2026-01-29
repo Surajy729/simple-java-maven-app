@@ -25,7 +25,7 @@ pipeline {
         stage('Deliver') { 
             steps {
                 // Use 'bat' for Windows agents, not 'sh'
-                bat 'call/jenkins/scripts/deliver.bat' 
+                bat 'call jenkins\\scripts\\deliver.bat' 
             }
         }
     } // This closing bracket now correctly wraps ALL stages
