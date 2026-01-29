@@ -1,14 +1,18 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
+    tools {
+        // This MUST match the name in your Global Tool Configuration exactly
+        maven 'MAVEN 3' 
     }
     stages {
         stage('Build') {
             steps {
-                bat 'mvn -B -DskipTests clean package'
+                // Use 'bat' for Windows, 'sh' for Linux
+                bat 'mvn clean package'
             }
         }
+    }
+
         stage('Test') {
             steps {
                 bat 'mvn test'
