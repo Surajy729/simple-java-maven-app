@@ -7,10 +7,10 @@ call mvn jar:jar install:install help:evaluate -Dexpression=project.name -q -Dfo
 
 echo Extracting project name and version...
 
-:: Use -q and -DforceStdout to get ONLY the clean text
+:: The Windows way to 'catch' a command's output into a variable
 for /f "usebackq delims=" %%i in (`mvn -q -DforceStdout help:evaluate -Dexpression=project.name`) do set "NAME=%%i"
 for /f "usebackq delims=" %%i in (`mvn -q -DforceStdout help:evaluate -Dexpression=project.version`) do set "VERSION=%%i"
 
 echo The following command runs your Java application:
-:: Use the %NAME% syntax for Windows variables
+:: Use %variable% syntax and backslashes for Windows paths
 java -jar target\%NAME%-%VERSION%.jar
