@@ -22,11 +22,15 @@ pipeline {
             }
         }
 
-        stage('Deliver') { 
-            steps {
-                // Use 'bat' for Windows agents, not 'sh'
-                bat 'call jenkins\\scripts\\deliver.bat' 
-            }
-        }
+     stage('Deliver') {
+    steps {
+        // Run the commands directly in the pipeline to avoid .bat path issues
+        bat """
+            for /f "usebackq delims=" %%i in (`mvn -q -DforceStdout help:evaluate -Dexpression=project.name`) do set NAME=%%i
+            for /f "usebackq delims=" %%i in (`mvn -q -DforceStdout help:evaluate -Dexpression=project.version`) do set VERSION=%%i
+            java -jar target\\%NAME%-%VERSION%.jar
+        """
+    }
+}
     } // This closing bracket now correctly wraps ALL stages
 }
