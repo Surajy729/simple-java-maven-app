@@ -7,11 +7,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Use 'bat' for Windows, 'sh' for Linux
                 bat 'mvn clean package'
             }
         }
-    }
 
         stage('Test') {
             steps {
@@ -23,10 +21,12 @@ pipeline {
                 }
             }
         }
+
         stage('Deliver') { 
             steps {
-                sh './jenkins/scripts/deliver.sh' 
+                // Use 'bat' for Windows agents, not 'sh'
+                bat 'call ./jenkins/scripts/deliver.bat' 
             }
         }
-    }
-
+    } // This closing bracket now correctly wraps ALL stages
+}
